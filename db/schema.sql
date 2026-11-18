@@ -1,0 +1,13 @@
+-- Mounted into MySQL's init directory by docker-compose. The API also runs the
+-- same idempotent statement on startup, so both paths stay in sync.
+CREATE TABLE IF NOT EXISTS users (
+  id            BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  username      VARCHAR(30)  NOT NULL,
+  email         VARCHAR(254) NOT NULL,
+  password_hash VARCHAR(100) NOT NULL,
+  address       VARCHAR(255) NOT NULL,
+  created_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_users_email (email),
+  UNIQUE KEY uq_users_username (username)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
